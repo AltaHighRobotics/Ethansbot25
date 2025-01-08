@@ -26,8 +26,10 @@ class RobotContainer:
     def __init__(self) -> None:
         self.drive = DriveSubsystems()
 
+        # This code SHOULD run every frame while the robot is active
         self.drive.setDefaultCommand(DefaultDrive(self.drive, 1))
 
+        # We want it to dance while holding the left bumper
         InputManager.onButtonHold(InputManager.Button.LEFT_BUMPER, Dance(self.drive))
 
     def getAutonomousCommand(self) -> str:

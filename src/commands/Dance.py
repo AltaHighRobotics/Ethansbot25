@@ -6,6 +6,11 @@ import constants
 import time
 
 class Dance(commands2.command.Command):
+    """
+    The purpose of this command is the make the robot
+    go back and forth while a button is being held
+    """
+
     def __init__(self, drive: DriveSubsystems):
         self.drive = drive
         self.addRequirements(self.drive)

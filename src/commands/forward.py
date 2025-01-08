@@ -5,6 +5,11 @@ from subsytems.driverSubsystem import DriveSubsystems
 
 
 class DefaultDrive(commands2.Command):
+    """
+    The purpose of this command is to allow the robot
+    to move backwards, forwards and rotate from controller input
+    """
+
     def __init__(self, drive: DriveSubsystems, speed: float) -> None:
         super().__init__()
 

@@ -11,6 +11,7 @@ class DriveSubsystems(commands2.Subsystem):
     def __init__(self) -> None:
         super().__init__()
         
+        # I am choosing to define these here because I belive constants should remain just numbers
         self.left1 = ctre.WPI_TalonFX(constants.LEFT_MOTOR_ID_1)
         self.left2 = ctre.WPI_TalonFX(constants.LEFT_MOTOR_ID_2)
         self.right1= ctre.WPI_TalonFX(constants.RIGHT_MOTOR_ID_1)
