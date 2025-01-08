@@ -1,8 +1,3 @@
-
-import phoenix5 as ctre
-import wpilib
-import wpilib.drive
-
 # I belive that the constants file should only consist of basic datatypes like
 # Numbers, Enums, Bools, and Strings and NOT objects/classes or anything that isn't data
 
