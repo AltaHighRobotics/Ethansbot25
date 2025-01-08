@@ -29,15 +29,15 @@ def getGasVsReverse() -> float:
     )
 
 
-def getHorizontalStick() -> int:
+def getHorizontalStick() -> float:
     """
     Is meant for robots turing left or right based on the stick
     being flicked to the left or right
 
     Returns:
-        int: Either 1 for right or -1 for left
+        float: A range from -1 to 1
     """
-    return int(
+    return float(
         min(1, max(-1, driverController.getLeftX() + driverController.getRightX()))
     )
 

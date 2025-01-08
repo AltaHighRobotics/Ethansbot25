@@ -10,11 +10,12 @@ class DefaultDrive(commands2.Command):
     to move backwards, forwards and rotate from controller input
     """
 
-    def __init__(self, drive: DriveSubsystems, speed: float) -> None:
+    def __init__(self, drive: DriveSubsystems, speed: float, rotationSpeed: float) -> None:
         super().__init__()
 
         self.drive = drive
         self.speed = speed
+        self.rotationSpeed = rotationSpeed
 
         self.addRequirements(self.drive)
 
@@ -22,4 +23,4 @@ class DefaultDrive(commands2.Command):
         forward = InputManager.getGasVsReverse()
         rotation = InputManager.getHorizontalStick()
 
-        self.drive.arcadeDrive(forward * self.speed, rotation * self.speed)
+        self.drive.arcadeDrive(forward * self.speed, rotation * self.rotationSpeed)
