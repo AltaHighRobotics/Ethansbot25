@@ -35,8 +35,8 @@ class DriveSubsystems(commands2.Subsystem):
         self.maxOut = constants.MAX_SPEED
         self.setMaxOutput(self.maxOut)
 
-    def arcadeDrive(self, fwd: float, rot: float) -> None:
-        self.drive.arcadeDrive(fwd, -rot)
+    def arcadeDrive(self, forward: float, rotation: float) -> None:
+        self.drive.arcadeDrive(forward, -rotation)
 
     def setMaxOutput(self, maxOutput: float):
         self.maxOut = maxOutput
