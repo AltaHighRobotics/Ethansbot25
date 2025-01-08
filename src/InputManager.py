@@ -1,6 +1,7 @@
 import wpilib
 from enum import Enum
 import constants
+import commands2
 from typing import Callable
 
 
@@ -9,8 +10,8 @@ class Button(Enum):
 
 
 # Keeping driverController as a global variable
-driverController = wpilib.XboxController(constants.kDriverControllerPort)
-# self.driverController = wpilib.Joystick(constants.kDriverControllerPort)
+driverController = wpilib.XboxController(constants.DRIVER_CONTROLLER_PORT)
+# self.driverController = wpilib.Joystick(constants.DRIVER_CONTROLLER_PORT)
 
 
 def getGasVsReverse() -> float:
@@ -50,4 +51,4 @@ def onButtonHold(button: Button, function: Callable):
         function (Callable): A function to be ran every frame the button is being held
     """
 
-    commands2.button.JoystickButton(driverController, button).whileTrue(function())
+    commands2.button.JoystickButton(driverController, button.value).whileTrue(function())
