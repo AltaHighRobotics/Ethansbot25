@@ -1,0 +1,19 @@
+
+import phoenix5 as ctre
+import wpilib
+import wpilib.drive
+
+LEFT_MOTOR_ID_1 = 1
+LEFT_MOTOR_ID_2 = 2
+RIGHT_MOTOR_ID_1 = 3
+RIGHT_MOTOR_ID_2 = 4
+
+DRIVER_CONTROLLER_PORT = 0
+REGULAR_SPEED = 0.5
+BOOST_SPEED = 0.9
+
+MAX_SPEED = 0.5
+
+DANCE_SPEED = 0.7
+DANCE_WAIT_TIME = 60/122
+

@@ -1,11 +1,9 @@
 from subsytems.driverSubsystem import DriveSubsystems
 import commands2
+import constants
 from wpilib.shuffleboard import Shuffleboard
 import constants
 import time
-
-DANCE_SPEED = 0.7
-DANCE_WAIT_TIME = 60/122
 
 class Dance(commands2.command.Command):
     def __init__(self, drive: DriveSubsystems):
@@ -19,11 +17,11 @@ class Dance(commands2.command.Command):
         pass
     
     def execute(self) -> None:
-        if time.time() - self.startTime >= DANCE_WAIT_TIME*2:
+        if time.time() - self.startTime >= constants.DANCE_WAIT_TIME*2:
             self.startTime = time.time()
             
-        elif time.time() - self.startTime >= DANCE_WAIT_TIME*1:
-            self.drive.arcadeDrive(-DANCE_SPEED, 0)
+        elif time.time() - self.startTime >= constants.DANCE_WAIT_TIME*1:
+            self.drive.arcadeDrive(-constants.DANCE_SPEED, 0)
         else:
-            self.drive.arcadeDrive(DANCE_SPEED, 0)
+            self.drive.arcadeDrive(constants.DANCE_SPEED, 0)
         

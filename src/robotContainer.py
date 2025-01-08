@@ -5,13 +5,16 @@
 #
 from commands.forward import DefaultDrive
 from subsytems.driverSubsystem import DriveSubsystems
+import InputManager
 import constants
 import wpilib
 from commands.Dance import Dance
 import constants
 
-#from commands2.defaultDrive import DefaultDrive
+# from commands2.defaultDrive import DefaultDrive
 import commands2
+
+
 class RobotContainer:
     """
     This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,24 +24,11 @@ class RobotContainer:
     """
 
     def __init__(self) -> None:
-        # The driver's controller
-        self.driverController = wpilib.XboxController(constants.kDriverControllerPort)
-        #self.driverController = wpilib.Joystick(constants.kDriverControllerPort)
-
-        # The robot's subsystems
         self.drive = DriveSubsystems()
 
-        # set up default drive command
-        self.drive.setDefaultCommand(
-            DefaultDrive(
-                self.drive,
-                lambda: self.driverController.getRightTriggerAxis() - self.driverController.getLeftTriggerAxis(),
-                lambda: min(1, max(-1, self.driverController.getLeftX() + self.driverController.getRightX())),
-                lambda: 1
-            )
-        )
+        self.drive.setDefaultCommand(DefaultDrive(self.drive, 1))
 
-        commands2.button.JoystickButton(self.driverController, 5).whileTrue(Dance(self.drive))
+        InputManager.onButtonHold(InputManager.Button.LEFT_BUMPER, Dance(self.drive))
 
     def getAutonomousCommand(self) -> str:
-        return None
+        return ""
