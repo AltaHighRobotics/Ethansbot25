@@ -16,21 +16,25 @@ class DriveSubsystems(commands2.Subsystem):
         self.right1 = ctre.WPI_TalonFX(constants.RIGHT_MOTOR_ID_1)
         self.right2 = ctre.WPI_TalonFX(constants.RIGHT_MOTOR_ID_2)
 
+        # Makes it so the robot doesn't move when idle, like a car in park vs neutral
         self.left1.setNeutralMode(ctre.NeutralMode.Brake)
         self.left2.setNeutralMode(ctre.NeutralMode.Brake)
         self.right1.setNeutralMode(ctre.NeutralMode.Brake)
         self.right2.setNeutralMode(ctre.NeutralMode.Brake)
 
+        # Puts the side motors in groups so we don't have to deal with all four, just 2 for each side
         self.left = wpilib.MotorControllerGroup(self.left1, self.left2)
         self.right = wpilib.MotorControllerGroup(self.right1, self.right2)
 
         self.right.setInverted(True)
 
+        # Bascially creates a car object with both motor groups for each side
         self.drive = wpilib.drive.DifferentialDrive(
             self.left,
             self.right,
         )
 
+        # Limits the speed that the robot will go to
         self.maxOut = constants.MAX_SPEED
         self.setMaxOutput(self.maxOut)
 
