@@ -5,6 +5,9 @@
 #
 from commands.forward import DefaultDrive
 from subsytems.driverSubsystem import DriveSubsystems
+from commands.Search import Search
+from commands.autoAlign import AutoAlign
+from subsytems.apriltagSubsystem import AprilTagSubsystem
 import InputManager
 import constants
 import wpilib
@@ -25,12 +28,17 @@ class RobotContainer:
 
     def __init__(self) -> None:
         self.drive = DriveSubsystems()
+        self.vision = AprilTagSubsystem()
 
         # This code SHOULD run every frame while the robot is active
         self.drive.setDefaultCommand(DefaultDrive(self.drive, constants.REGULAR_SPEED, constants.ROTATION_SPEED))
 
         # We want it to dance while holding the left bumper
         InputManager.onButtonHold(InputManager.Button.LEFT_BUMPER, lambda: Dance(self.drive))
+
+        self.vision.setDefaultCommand(Search(self.vision))
+        commands2.button.Trigger(lambda: self.vision.hasTarget(1)).whileTrue(AutoAlign(self.drive, self.vision, 1))
+
 
     def getAutonomousCommand(self) -> str:
         return ""
