@@ -24,15 +24,21 @@ class AprilTagSubsystem(Subsystem): # Apriltags with PhotonVision
         if result.hasTargets():
             self.targets = result.getTargets()
             return self.targets
-        else: self.targets = None    
+        else: 
+            self.targets = None  
+
     def hasTarget(self, id: int = None) -> bool: # See if a target with a given fiducial is visible. Run with no args to see if any targets are visible
         targets = self.targets
-        if targets is not None:
-            if id is not None: 
-                for target in targets:
-                    if target.getFiducialId() == id:
-                        return True # If target is found
-            else: return True # If no id is given and we have targets
+        if targets is None:
+            return False
+        
+        if id is None: 
+            return True # If no id is given and we have targets
+        
+        for target in targets:
+            if target.getFiducialId() == id:
+                return True # If target is found
+                
         return False # No targets
     
     def getTargetYaw(self, id:int): # Get the angle of the target so we can steer towards it
