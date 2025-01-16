@@ -5,6 +5,11 @@ import phoenix5 as ctre
 
 import constants
 
+from configGenerator import requireConfigConstant
+requireConfigConstant("MOTOR_ID_1")
+requireConfigConstant("MOTOR_ID_2")
+requireConfigConstant("MOTOR_ID_3")
+requireConfigConstant("MOTOR_ID_4")
 
 class DriveSubsystems(commands2.Subsystem):
     def __init__(self) -> None:

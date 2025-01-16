@@ -17,6 +17,10 @@ import constants
 # from commands2.defaultDrive import DefaultDrive
 import commands2
 
+from configGenerator import requireConfigConstant
+
+requireConfigConstant("ROBOT_NAME")
+requireConfigConstant("ROBOT_TEAM_ID")
 
 class RobotContainer:
     """

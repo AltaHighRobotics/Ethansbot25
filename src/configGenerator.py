@@ -1,11 +1,58 @@
 import yaml
+import os
+from enum import Enum
+from dataclasses import dataclass
 
-requiredConstants: set[str] = {"THMP_E", "FEJIO_A"}
+@dataclass
+class Constant:
+    constantName: str
+    scriptname: str
+
+requiredConstants: list[Constant] = []
+
+def requireConfigConstant(constant):
+    if type(constant) == Constant:
+        requiredConstants.append(constant)
+    elif type(constant) == str:
+        filename = os.path.basename(__file__).split(".")[0]
+        requiredConstants.append(Constant(constant, filename))
+    else:
+        raise TypeError("Not a valid argument")
 
 def writeRequiredConstantsToFile() -> None:
-    with open("config.yaml", "w+") as f:
-        data_to_write = {}
-        constants = data_to_write["constants"]
+    all_constant_names: list[str] = []
+    all_constants = requiredConstants
+
+    # Read from file
+    with open("config.yml", "r") as f:
+        data = yaml.safe_load(f)
+        constantsYml = data["constants"]
+
+        def readFromFile():
+            if constantsYml == None:
+                return
+            for scriptname, scriptConstants in constantsYml.items():
+                for constantName, value in scriptConstants.items():
+                    all_constants.append(Constant(constantName, scriptname))
+                    print(f"Read {constantName}")
         
+        readFromFile()
+
+
+    # Write to file
+    with open("config.yml", "w+") as f:
+        data_to_write = {"constants": {}}
+        constantsYml = data_to_write["constants"]
+
         for constant in requiredConstants:
-            constants.append(constant)
+            if not constant.scriptname in constantsYml:
+                constantsYml[constant.scriptname] = {}
+
+            constantsYml[constant.scriptname][constant.constantName] = 0
+            print(f"Write {constant.constantName}")
+
+        yaml.dump(data_to_write, f, default_flow_style=False)
+
+print(requiredConstants)
+writeRequiredConstantsToFile()
+
