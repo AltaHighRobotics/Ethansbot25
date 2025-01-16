@@ -2,6 +2,7 @@ import yaml
 import os
 from enum import Enum
 from dataclasses import dataclass
+import inspect
 
 @dataclass
 class Constant:
@@ -11,10 +12,14 @@ class Constant:
 requiredConstants: list[Constant] = []
 
 def requireConfigConstant(constant):
+    print("GOGJIOEWIOFIOEWJIFWEJIOJIO")
     if type(constant) == Constant:
         requiredConstants.append(constant)
     elif type(constant) == str:
-        filename = os.path.basename(__file__).split(".")[0]
+        frame = inspect.stack()[1]
+        module = inspect.getmodule(frame[0])
+        filename = module.__file__
+        filename = os.path.basename(filename).split(".")[0]
         requiredConstants.append(Constant(constant, filename))
     else:
         raise TypeError("Not a valid argument")
@@ -53,6 +58,4 @@ def writeRequiredConstantsToFile() -> None:
 
         yaml.dump(data_to_write, f, default_flow_style=False)
 
-print(requiredConstants)
-writeRequiredConstantsToFile()
 
