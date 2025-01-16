@@ -1,16 +1,17 @@
 import wpilib
 from enum import Enum
-import constants
 import commands2
 from typing import Callable
 
+from configGenerator import requireConfigConstant, getConstantValue
+requireConfigConstant("DRIVER_CONTROLLER_PORT")
 
 class Button(Enum):
     LEFT_BUMPER = 5
 
 
 # Keeping driverController as a global variable
-driverController = wpilib.XboxController(constants.DRIVER_CONTROLLER_PORT)
+driverController = wpilib.XboxController(getConstantValue("DRIVER_CONTROLLER_PORT"))
 # self.driverController = wpilib.Joystick(constants.DRIVER_CONTROLLER_PORT)
 
 

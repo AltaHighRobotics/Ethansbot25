@@ -1,13 +1,15 @@
 from photonlibpy.photonCamera import PhotonCamera
 from commands2 import Subsystem
-import constants
 from photonlibpy.photonTrackedTarget import PhotonTrackedTarget
+
+from configGenerator import requireConfigConstant, getConstantValue
+requireConfigConstant("CAMERA_NAME")
 
 class AprilTagSubsystem(Subsystem): # Apriltags with PhotonVision
     def __init__(self) -> None:
         super().__init__()
 
-        self.cam = PhotonCamera(constants.CAMERA_NAME)
+        self.cam = PhotonCamera(getConstantValue("CAMERA_NAME"))
         self.flagOn = False
         self.flag = None
         self.targets = []

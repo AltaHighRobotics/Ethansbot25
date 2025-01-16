@@ -9,19 +9,15 @@ from commands.Search import Search
 from commands.autoAlign import AutoAlign
 from subsytems.apriltagSubsystem import AprilTagSubsystem
 import InputManager
-import constants
 import wpilib
 from commands.Dance import Dance
-import constants
 
 # from commands2.defaultDrive import DefaultDrive
 import commands2
 
-from configGenerator import writeRequiredConstantsToFile
-
 from configGenerator import requireConfigConstant, getConstantValue
-requireConfigConstant("ROBOT_NAME")
-requireConfigConstant("ROBOT_TEAM_ID")
+requireConfigConstant("REGULAR_SPEED")
+requireConfigConstant("ROTATION_SPEED")
 
 class RobotContainer:
     """
@@ -36,7 +32,7 @@ class RobotContainer:
         self.vision = AprilTagSubsystem()
 
         # This code SHOULD run every frame while the robot is active
-        self.drive.setDefaultCommand(DefaultDrive(self.drive, constants.REGULAR_SPEED, constants.ROTATION_SPEED))
+        self.drive.setDefaultCommand(DefaultDrive(self.drive, getConstantValue("REGULAR_SPEED"), getConstantValue("ROTATION_SPEED")))
 
         # We want it to dance while holding the left bumper
         InputManager.onButtonHold(InputManager.Button.LEFT_BUMPER, lambda: Dance(self.drive))

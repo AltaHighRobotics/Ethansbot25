@@ -1,9 +1,11 @@
 from subsytems.driverSubsystem import DriveSubsystems
 import commands2
-import constants
 from wpilib.shuffleboard import Shuffleboard
-import constants
 import time
+
+from configGenerator import requireConfigConstant, getConstantValue
+requireConfigConstant("DANCE_SPEED")
+requireConfigConstant("DANCE_WAIT_TIME")
 
 class Dance(commands2.command.Command):
     """
@@ -22,11 +24,11 @@ class Dance(commands2.command.Command):
         pass
     
     def execute(self) -> None:
-        if time.time() - self.startTime >= constants.DANCE_WAIT_TIME*2:
+        if time.time() - self.startTime >= getConstantValue("DANCE_WAIT_TIME*2"):
             self.startTime = time.time()
             
-        elif time.time() - self.startTime >= constants.DANCE_WAIT_TIME*1:
-            self.drive.arcadeDrive(-constants.DANCE_SPEED, 0)
+        elif time.time() - self.startTime >= getConstantValue("DANCE_WAIT_TIME*1"):
+            self.drive.arcadeDrive(-getConstantValue("DANCE_SPEED"), 0)
         else:
-            self.drive.arcadeDrive(constants.DANCE_SPEED, 0)
+            self.drive.arcadeDrive(getConstantValue("DANCE_SPEED"), 0)
         

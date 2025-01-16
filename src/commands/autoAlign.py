@@ -6,8 +6,10 @@ import InputManager
 from subsytems.driverSubsystem import DriveSubsystems
 from subsytems.apriltagSubsystem import AprilTagSubsystem
 
-import constants
-        # AutoAlign(self.drive, self.vision, lambda: , lambda: , 1))
+from configGenerator import requireConfigConstant, getConstantValue
+requireConfigConstant("AUTO_ALIGN_P")
+requireConfigConstant("AUTO_ALIGN_I")
+requireConfigConstant("AUTO_ALIGN_D")
 
 class AutoAlign(Command):
     def __init__(self, drive: DriveSubsystems, vision: AprilTagSubsystem, tagID = 1):
@@ -17,7 +19,7 @@ class AutoAlign(Command):
         self.vision = vision
         self.tagnID = tagID
 
-        self.PID = PIDController(constants.AUTO_ALIGN_P, constants.AUTO_ALIGN_I, constants.AUTO_ALIGN_D)
+        self.PID = PIDController(getConstantValue("AUTO_ALIGN_P"), getConstantValue("AUTO_ALIGN_I"), getConstantValue("AUTO_ALIGN_D"))
         self.PID.disableContinuousInput()
         self.PID.setSetpoint(0)
 

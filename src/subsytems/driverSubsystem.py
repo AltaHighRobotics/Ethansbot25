@@ -3,23 +3,22 @@ import wpilib
 import wpilib.drive
 import phoenix5 as ctre
 
-import constants
-
-from configGenerator import requireConfigConstant
-requireConfigConstant("MOTOR_ID_1")
-requireConfigConstant("MOTOR_ID_2")
-requireConfigConstant("MOTOR_ID_3")
-requireConfigConstant("MOTOR_ID_4")
+from configGenerator import requireConfigConstant, getConstantValue
+requireConfigConstant("LEFT_MOTOR_ID_1")
+requireConfigConstant("LEFT_MOTOR_ID_2")
+requireConfigConstant("RIGHT_MOTOR_ID_1")
+requireConfigConstant("RIGHT_MOTOR_ID_2")
+requireConfigConstant("MAX_SPEED")
 
 class DriveSubsystems(commands2.Subsystem):
     def __init__(self) -> None:
         super().__init__()
 
         # I am choosing to define these here because I belive constants should remain just numbers
-        self.left1 = ctre.WPI_TalonFX(constants.LEFT_MOTOR_ID_1)
-        self.left2 = ctre.WPI_TalonFX(constants.LEFT_MOTOR_ID_2)
-        self.right1 = ctre.WPI_TalonFX(constants.RIGHT_MOTOR_ID_1)
-        self.right2 = ctre.WPI_TalonFX(constants.RIGHT_MOTOR_ID_2)
+        self.left1 = ctre.WPI_TalonFX(getConstantValue("LEFT_MOTOR_ID_1"))
+        self.left2 = ctre.WPI_TalonFX(getConstantValue("LEFT_MOTOR_ID_2"))
+        self.right1 = ctre.WPI_TalonFX(getConstantValue("RIGHT_MOTOR_ID_1"))
+        self.right2 = ctre.WPI_TalonFX(getConstantValue("RIGHT_MOTOR_ID_2"))
 
         # Makes it so the robot doesn't move when idle, like a car in park vs neutral
         self.left1.setNeutralMode(ctre.NeutralMode.Brake)
@@ -40,7 +39,7 @@ class DriveSubsystems(commands2.Subsystem):
         )
 
         # Limits the speed that the robot will go to
-        self.maxOut = constants.MAX_SPEED
+        self.maxOut = getConstantValue("MAX_SPEED")
         self.setMaxOutput(self.maxOut)
 
     def arcadeDrive(self, forward: float, rotation: float) -> None:
