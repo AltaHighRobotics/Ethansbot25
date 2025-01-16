@@ -24,21 +24,24 @@ def requireConfigConstant(constant: str, scriptname: str = ""):
 
     configData[scriptname][constant] = 0
 
-def writeRequiredConstantsToFile() -> None:
-    all_constants = configData
+    writeRequiredConstantsToFile()
 
+def writeRequiredConstantsToFile() -> None:
     # Read from file
     with open("config.yml", "r") as f:
         data = yaml.safe_load(f)
 
         if data != None: 
-            # all_constants.update(data)
-            # Uncomment to not remove constant when not in code
-            pass
+            for loadedScriptname, loadedConstants in data.items():
+                for loadedName, loadedValue in loadedConstants.items():
+                    if not loadedScriptname in configData:
+                        configData[loadedScriptname] = {}
+
+                    configData[loadedScriptname][loadedName] = loadedValue
 
     # Write to file
     with open("config.yml", "w+") as f:
-        yaml.dump(all_constants, f, default_flow_style=False)
+        yaml.dump(configData, f, default_flow_style=False)
 
 def getConstantValue(name: str) -> Any:
     scriptname = getNameOfCallBehaviour()
@@ -47,3 +50,5 @@ def getConstantValue(name: str) -> Any:
         raise KeyError(f"Scriptname {scriptname} cannot be found in {configData}")
 
     return configData[scriptname][name]
+
+writeRequiredConstantsToFile()

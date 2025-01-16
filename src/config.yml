@@ -1,8 +1,8 @@
 driverSubsystem:
-  MOTOR_ID_1: 0
-  MOTOR_ID_2: 0
-  MOTOR_ID_3: 0
-  MOTOR_ID_4: 0
+  MOTOR_ID_1: 1
+  MOTOR_ID_2: 2
+  MOTOR_ID_3: 3
+  MOTOR_ID_4: 4
 robotContainer:
-  ROBOT_NAME: 0
-  ROBOT_TEAM_ID: 0
+  ROBOT_NAME: Jerry
+  ROBOT_TEAM_ID: 6

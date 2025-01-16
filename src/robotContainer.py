@@ -19,7 +19,7 @@ import commands2
 
 from configGenerator import writeRequiredConstantsToFile
 
-from configGenerator import requireConfigConstant
+from configGenerator import requireConfigConstant, getConstantValue
 requireConfigConstant("ROBOT_NAME")
 requireConfigConstant("ROBOT_TEAM_ID")
 
@@ -44,8 +44,6 @@ class RobotContainer:
         self.vision.setDefaultCommand(Search(self.vision))
         commands2.button.Trigger(lambda: self.vision.hasTarget(1)).whileTrue(AutoAlign(self.drive, self.vision, 1))
 
-
     def getAutonomousCommand(self) -> str:
         return ""
 
-writeRequiredConstantsToFile()
