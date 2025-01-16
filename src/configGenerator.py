@@ -43,6 +43,13 @@ def writeRequiredConstantsToFile() -> None:
     with open("config.yml", "w+") as f:
         yaml.dump(configData, f, default_flow_style=False)
 
+    # Add fancy new lines
+    yaml_output = ""
+    with open("config.yml", "r") as f:
+        yaml_output = f.read()
+    with open("config.yml", "w+") as f:
+        f.write('\n'.join([line if line == '' or line.startswith(' ') else '\n' + line for line in yaml_output.splitlines()]))
+
 def getConstantValue(name: str) -> Any:
     scriptname = getNameOfCallBehaviour()
 

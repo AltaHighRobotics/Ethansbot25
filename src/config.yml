@@ -1,20 +1,26 @@
+
 Dance:
   DANCE_SPEED: 0.7
   DANCE_WAIT_TIME: 0.49
+
 InputManager:
   DRIVER_CONTROLLER_PORT: 0
+
 apriltagSubsystem:
   CAMERA_NAME: camera1
+
 autoAlign:
   AUTO_ALIGN_D: 0.4
   AUTO_ALIGN_I: 0.2
   AUTO_ALIGN_P: 0.08
+
 driverSubsystem:
   LEFT_MOTOR_ID_1: 1
   LEFT_MOTOR_ID_2: 2
   MAX_SPEED: 0.5
   RIGHT_MOTOR_ID_1: 3
   RIGHT_MOTOR_ID_2: 4
+
 robotContainer:
   REGULAR_SPEED: 1
   ROTATION_SPEED: 0.6
