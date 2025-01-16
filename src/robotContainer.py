@@ -15,7 +15,7 @@ from commands.Dance import Dance
 # from commands2.defaultDrive import DefaultDrive
 import commands2
 
-from configGenerator import requireConfigConstant, getConstantValue
+from configGenerator import requireConfigConstant, cget
 requireConfigConstant("REGULAR_SPEED")
 requireConfigConstant("ROTATION_SPEED")
 
@@ -32,7 +32,7 @@ class RobotContainer:
         self.vision = AprilTagSubsystem()
 
         # This code SHOULD run every frame while the robot is active
-        self.drive.setDefaultCommand(DefaultDrive(self.drive, getConstantValue("REGULAR_SPEED"), getConstantValue("ROTATION_SPEED")))
+        self.drive.setDefaultCommand(DefaultDrive(self.drive, cget("REGULAR_SPEED"), cget("ROTATION_SPEED")))
 
         # We want it to dance while holding the left bumper
         InputManager.onButtonHold(InputManager.Button.LEFT_BUMPER, lambda: Dance(self.drive))

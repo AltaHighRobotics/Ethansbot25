@@ -50,7 +50,7 @@ def writeRequiredConstantsToFile() -> None:
     with open("config.yml", "w+") as f:
         f.write('\n'.join([line if line == '' or line.startswith(' ') else '\n' + line for line in yaml_output.splitlines()]))
 
-def getConstantValue(name: str) -> Any:
+def cget(name: str):
     scriptname = getNameOfCallBehaviour()
 
     if not scriptname in configData:
@@ -59,3 +59,4 @@ def getConstantValue(name: str) -> Any:
     return configData[scriptname][name]
 
 writeRequiredConstantsToFile()
+

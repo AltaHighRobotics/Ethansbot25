@@ -7,6 +7,9 @@
 
 import commands2
 
+from wpilib.shuffleboard import Shuffleboard
+from configGenerator import configData
+
 from robotContainer import RobotContainer
 class MyRobot(commands2.TimedCommandRobot):
     """
@@ -23,3 +26,9 @@ class MyRobot(commands2.TimedCommandRobot):
         # autonomous chooser on the dashboard.
         self.container = RobotContainer()
         #wpilib.CameraServer.launch("vision.py")
+
+        # Shuffleboard
+        for scriptname, constants in configData.items():
+            for constant, value in constants.items():
+                self.shuffleboard = Shuffleboard.getTab(scriptname)
+                self.shuffleboard.add(constant, value).withPosition(0, 0)

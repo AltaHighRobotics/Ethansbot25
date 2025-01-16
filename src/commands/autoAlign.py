@@ -6,7 +6,7 @@ import InputManager
 from subsytems.driverSubsystem import DriveSubsystems
 from subsytems.apriltagSubsystem import AprilTagSubsystem
 
-from configGenerator import requireConfigConstant, getConstantValue
+from configGenerator import requireConfigConstant, cget
 requireConfigConstant("AUTO_ALIGN_P")
 requireConfigConstant("AUTO_ALIGN_I")
 requireConfigConstant("AUTO_ALIGN_D")
@@ -19,7 +19,7 @@ class AutoAlign(Command):
         self.vision = vision
         self.tagnID = tagID
 
-        self.PID = PIDController(getConstantValue("AUTO_ALIGN_P"), getConstantValue("AUTO_ALIGN_I"), getConstantValue("AUTO_ALIGN_D"))
+        self.PID = PIDController(cget("AUTO_ALIGN_P"), cget("AUTO_ALIGN_I"), cget("AUTO_ALIGN_D"))
         self.PID.disableContinuousInput()
         self.PID.setSetpoint(0)
 

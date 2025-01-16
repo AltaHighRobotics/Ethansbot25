@@ -24,3 +24,6 @@ driverSubsystem:
 robotContainer:
   REGULAR_SPEED: 1
   ROTATION_SPEED: 0.6
+
+test:
+  TEST_VAR: 10
