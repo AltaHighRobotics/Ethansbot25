@@ -3,59 +3,47 @@ import os
 from enum import Enum
 from dataclasses import dataclass
 import inspect
+from typing import Any
 
-@dataclass
-class Constant:
-    constantName: str
-    scriptname: str
+configData = {}
 
-requiredConstants: list[Constant] = []
+def getNameOfCallBehaviour() -> str:
+    filename = inspect.stack()[2].filename    
+    if filename == None:
+        raise RuntimeError("Some weird file shit idk")
 
-def requireConfigConstant(constant):
-    print("GOGJIOEWIOFIOEWJIFWEJIOJIO")
-    if type(constant) == Constant:
-        requiredConstants.append(constant)
-    elif type(constant) == str:
-        frame = inspect.stack()[1]
-        module = inspect.getmodule(frame[0])
-        filename = module.__file__
-        filename = os.path.basename(filename).split(".")[0]
-        requiredConstants.append(Constant(constant, filename))
-    else:
-        raise TypeError("Not a valid argument")
+    filenameWithoutDotPy = os.path.basename(filename).split(".")[0]
+    return filenameWithoutDotPy
+
+def requireConfigConstant(constant: str, scriptname: str = ""):
+    if scriptname == "":
+        scriptname = getNameOfCallBehaviour()
+
+    if not scriptname in configData:
+        configData[scriptname] = {}
+
+    configData[scriptname][constant] = 0
 
 def writeRequiredConstantsToFile() -> None:
-    all_constant_names: list[str] = []
-    all_constants = requiredConstants
+    all_constants = configData
 
     # Read from file
     with open("config.yml", "r") as f:
         data = yaml.safe_load(f)
-        constantsYml = data["constants"]
 
-        def readFromFile():
-            if constantsYml == None:
-                return
-            for scriptname, scriptConstants in constantsYml.items():
-                for constantName, value in scriptConstants.items():
-                    all_constants.append(Constant(constantName, scriptname))
-                    print(f"Read {constantName}")
-        
-        readFromFile()
-
+        if data != None: 
+            # all_constants.update(data)
+            # Uncomment to not remove constant when not in code
+            pass
 
     # Write to file
     with open("config.yml", "w+") as f:
-        data_to_write = {"constants": {}}
-        constantsYml = data_to_write["constants"]
+        yaml.dump(all_constants, f, default_flow_style=False)
 
-        for constant in requiredConstants:
-            if not constant.scriptname in constantsYml:
-                constantsYml[constant.scriptname] = {}
+def getConstantValue(name: str) -> Any:
+    scriptname = getNameOfCallBehaviour()
 
-            constantsYml[constant.scriptname][constant.constantName] = 0
-            print(f"Write {constant.constantName}")
+    if not scriptname in configData:
+        raise KeyError(f"Scriptname {scriptname} cannot be found in {configData}")
 
-        yaml.dump(data_to_write, f, default_flow_style=False)
-
-
+    return configData[scriptname][name]

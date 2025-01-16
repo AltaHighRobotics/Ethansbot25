@@ -1,9 +1,8 @@
-constants:
-  driverSubsystem:
-    MOTOR_ID_1: 0
-    MOTOR_ID_2: 0
-    MOTOR_ID_3: 0
-    MOTOR_ID_4: 0
-  robotContainer:
-    ROBOT_NAME: 0
-    ROBOT_TEAM_ID: 0
+driverSubsystem:
+  MOTOR_ID_1: 0
+  MOTOR_ID_2: 0
+  MOTOR_ID_3: 0
+  MOTOR_ID_4: 0
+robotContainer:
+  ROBOT_NAME: 0
+  ROBOT_TEAM_ID: 0
