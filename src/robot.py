@@ -8,7 +8,7 @@
 import commands2
 
 from wpilib.shuffleboard import Shuffleboard
-from configGenerator import configData
+from configGenerator import configData, load
 
 from robotContainer import RobotContainer
 class MyRobot(commands2.TimedCommandRobot):
@@ -22,13 +22,15 @@ class MyRobot(commands2.TimedCommandRobot):
         This function is run when the robot is first started up and should be used for any
         initialization code.
         """
+        load()
         # Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         # autonomous chooser on the dashboard.
         self.container = RobotContainer()
         #wpilib.CameraServer.launch("vision.py")
 
         # Shuffleboard
-        for scriptname, constants in configData.items():
-            for constant, value in constants.items():
-                self.shuffleboard = Shuffleboard.getTab(scriptname)
-                self.shuffleboard.add(constant, value).withPosition(0, 0)
+        # for scriptname, constants in configData.items():
+        #     for constant, value in constants.items():
+        #         self.shuffleboard = Shuffleboard.getTab(scriptname)
+        #         v = self.shuffleboard.add(constant, value).withPosition(0, 0).getEntry()
+        #         print(v.getDouble(1.0))

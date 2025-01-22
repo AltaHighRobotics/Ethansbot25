@@ -1,9 +1,8 @@
 import yaml
 import os
-from enum import Enum
-from dataclasses import dataclass
 import inspect
 from typing import Any
+from wpilib.shuffleboard import Shuffleboard
 
 configData = {}
 
@@ -22,12 +21,13 @@ def requireConfigConstant(constant: str, scriptname: str = ""):
     if not scriptname in configData:
         configData[scriptname] = {}
 
-    configData[scriptname][constant] = 0
 
-    writeRequiredConstantsToFile()
+    tab = Shuffleboard.getTab(scriptname)
+    entry = tab.add(constant, 0.0).getEntry()
+    print(dir(entry))
+    configData[scriptname][constant] = entry
 
-def writeRequiredConstantsToFile() -> None:
-    # Read from file
+def load() -> None:
     with open("config.yml", "r") as f:
         data = yaml.safe_load(f)
 
@@ -39,6 +39,9 @@ def writeRequiredConstantsToFile() -> None:
 
                     configData[loadedScriptname][loadedName] = loadedValue
 
+
+def writeRequiredConstantsToFile() -> None:
+    # Read from file
     # Write to file
     with open("config.yml", "w+") as f:
         yaml.dump(configData, f, default_flow_style=False)
@@ -51,12 +54,13 @@ def writeRequiredConstantsToFile() -> None:
         f.write('\n'.join([line if line == '' or line.startswith(' ') else '\n' + line for line in yaml_output.splitlines()]))
 
 def cget(name: str):
+    def getValue(entry):
+        return entry.getFloat(0.0)
+
     scriptname = getNameOfCallBehaviour()
 
     if not scriptname in configData:
         raise KeyError(f"Scriptname {scriptname} cannot be found in {configData}")
 
-    return configData[scriptname][name]
-
-writeRequiredConstantsToFile()
+    return getValue(configData[scriptname][name])
 
